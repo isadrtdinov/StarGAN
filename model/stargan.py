@@ -1,8 +1,8 @@
 import wandb
 import torch
 from torch import nn
-from generator import Generator
-from critic import Critic
+from model.generator import Generator
+from model.critic import Critic
 from collections import defaultdict
 
 

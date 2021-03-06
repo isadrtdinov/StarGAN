@@ -1,7 +1,7 @@
 import math
 import torch
 from torch import nn
-from layers import DownsampleBlock, UpsampleBlock
+from model.layers import DownsampleBlock, UpsampleBlock
 
 
 class Generator(nn.Module):

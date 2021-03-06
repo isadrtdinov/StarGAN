@@ -1,6 +1,6 @@
 import math
 from torch import nn
-from layers import CriticBlock
+from model.layers import CriticBlock
 
 
 class Critic(nn.Module):
