@@ -21,7 +21,8 @@ class FrechetInceptionDistance(object):
         self.transform = T.Compose([
             lambda x: x * 0.5 + 0.5,
             T.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),  # normalize as ImageNet picture
-            lambda x: F.interpolate(x, size=(299, 299), mode='bilinear')  # rescale for Inception
+            lambda x: F.interpolate(x, size=(299, 299), mode='bilinear',  # rescale for Inception
+                                    align_corners=False, recompute_scale_factor=False)
         ])
 
         self.inception = inception_v3(pretrained=True, progress=True)
@@ -38,7 +39,7 @@ class FrechetInceptionDistance(object):
             fake_images = self.transform(fake_images)
 
             real_features += [self.inception(real_images).detach().cpu()]
-            fake_features += [self.inception(fake_images).detach.cpu()]
+            fake_features += [self.inception(fake_images).detach().cpu()]
 
         real_features = torch.cat(real_features, dim=0)
         fake_features = torch.cat(fake_features, dim=0)

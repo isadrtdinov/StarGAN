@@ -56,7 +56,7 @@ class StarGAN(object):
         self.net_D.eval()
 
     def clf_loss(self, clf_logits, labels):
-        return self.bce_loss(clf_logits, labels)
+        return self.bce_loss(clf_logits, labels.to(torch.float))
 
     def rec_loss(self, real_images, reconstructed_images):
         return self.l1_loss(real_images, reconstructed_images)
@@ -99,7 +99,7 @@ class StarGAN(object):
         fake_adv_logits, fake_clf_logits = self.net_D(fake_images)
 
         g_adv_loss = -fake_adv_logits.mean()
-        g_clf_loss = self.clf_loss(fake_adv_logits, trg_labels)
+        g_clf_loss = self.clf_loss(fake_clf_logits, trg_labels)
         g_rec_loss = self.rec_loss(real_images, reconstructed_images)
         g_loss = g_adv_loss + self.params.lambda_clf * g_clf_loss + \
                               self.params.lambda_rec * g_rec_loss

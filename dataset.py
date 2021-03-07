@@ -16,4 +16,4 @@ class CelebA(datasets.CelebA):
 
     def __getitem__(self, item):
         image, attrs = super().__getitem__(item)
-        return image, attrs[self.label_indices].to(torch.long)
+        return image, attrs[self.label_indices]
