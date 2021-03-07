@@ -22,7 +22,7 @@ class Params:
     num_workers: int = 8
     batch_size: int = 64
     num_epochs: int = 30
-    generator_lr: float = 1e-4
+    generator_lr: float = 3e-4
     critic_lr: float = 1e-4
 
     # loss params
