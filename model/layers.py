@@ -78,7 +78,6 @@ class CriticBlock(nn.Module):
                 nn.Conv2d(in_channels, out_channels, kernel_size=kernel,
                           stride=2, padding=math.ceil((kernel - 1) / 2))
             ),
-            nn.InstanceNorm2d(out_channels, affine=True),
             nn.LeakyReLU(neg_slope)
         )
 
