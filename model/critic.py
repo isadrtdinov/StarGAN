@@ -24,9 +24,9 @@ class Critic(nn.Module):
         output_channels = conv_channels * 2 ** (num_blocks - 1)
         output_size = img_size // 2 ** num_blocks
         self.adv_head = SpectralNorm(nn.Conv2d(output_channels, 1, kernel_size=kernel,
-                                               stride=1, padding=math.ceil((kernel - 1) / 2)))
+                                               stride=1, padding=math.ceil((kernel - 1) / 2), bias=False))
         self.clf_head = SpectralNorm(nn.Conv2d(output_channels, cond_channels,
-                                               kernel_size=output_size))
+                                               kernel_size=output_size, bias=False))
 
     def forward(self, images):
         outputs = self.blocks(images)

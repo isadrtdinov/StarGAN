@@ -76,7 +76,7 @@ class CriticBlock(nn.Module):
         self.conv = nn.Sequential(
             SpectralNorm(
                 nn.Conv2d(in_channels, out_channels, kernel_size=kernel,
-                          stride=2, padding=math.ceil((kernel - 1) / 2))
+                          stride=2, padding=math.ceil((kernel - 1) / 2), bias=False)
             ),
             nn.LeakyReLU(neg_slope)
         )
