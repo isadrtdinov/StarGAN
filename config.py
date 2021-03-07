@@ -34,5 +34,5 @@ class Params:
     example_domains: int = 7
     log_steps: int = 50
     valid_epochs: int = 2
-    checkpoint_epochs: int = 5
+    checkpoint_epochs: int = 1
     checkpoint_template: str = 'StarGAN{}.pt'
