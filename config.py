@@ -5,9 +5,11 @@ from dataclasses import dataclass
 class Params:
     # general config
     project: str = 'stargan'
+    random_seed: int = 1010101
     img_size: int = 128
+    crop_size: int = 178
     img_channels: int = 3
-    attributes: tuple[str] = ('Black_Hair', 'Blond_Hair', 'Brown_Hair', 'Male', 'Young')
+    attributes: tuple = ('Black_Hair', 'Blond_Hair', 'Brown_Hair', 'Male', 'Young')
 
     # architecture params
     conv_channels: int = 32
@@ -17,6 +19,7 @@ class Params:
     neg_slope: float = 0.1
 
     # training params
+    num_workers: int = 8
     batch_size: int = 64
     num_epochs: int = 10
     generator_lr: float = 1e-4
@@ -25,3 +28,11 @@ class Params:
     # loss params
     lambda_clf: float = 1.0
     lambda_rec: float = 10.0
+
+    # logging & checkpoints params
+    example_ids: tuple = (2, 11, 21, 27, 33)
+    example_domains: int = 7
+    log_steps: int = 100
+    valid_epochs: int = 5
+    checkpoint_epochs: int = 25
+    checkpoint_template: str = 'StarGAN{}.pt'

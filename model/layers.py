@@ -20,7 +20,6 @@ class DownsampleBlock(nn.Module):
     A U-Net downsample block, with one regular convolution,
     one strided convolution, instance norm and leaky ReLU activations
     """
-
     def __init__(self, block_channels, kernel=5, neg_slope=0.1):
         super().__init__()
 
@@ -44,7 +43,6 @@ class UpsampleBlock(nn.Module):
     concatenates them with the respective downsample features
     and passes through a regular convolution
     """
-
     def __init__(self, block_channels, kernel=5, neg_slope=0.1):
         super().__init__()
 

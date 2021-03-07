@@ -1,4 +1,3 @@
-import wandb
 import torch
 from torch import nn
 from model.generator import Generator
@@ -7,6 +6,10 @@ from collections import defaultdict
 
 
 class StarGAN(object):
+    """
+    Main StarGAN class, which implements
+    initialization and training of the models
+    """
     def __init__(self, params, device):
         self.params = params
         self.device = device
@@ -23,10 +26,7 @@ class StarGAN(object):
 
         self.bce_loss = nn.BCEWithLogitsLoss().to(device)
         self.l1_loss = nn.L1Loss().to(device)
-        self.losses = defaultdict(float)
-
-        wandb.init(project=params.project, config=params.__dict__)
-        wandb.watch([self.net_G, self.net_D])
+        self.metrics = defaultdict(float)
         self.train_step = 0
 
     def save_checkpoint(self, file):
@@ -35,6 +35,7 @@ class StarGAN(object):
             'net_D': self.net_D.state_dict(),
             'optim_G': self.optim_G.state_dict(),
             'optim_D': self.optim_D.state_dict(),
+            'metrics': self.metrics,
             'train_step': self.train_step
         }, file)
 
@@ -44,7 +45,7 @@ class StarGAN(object):
         self.net_D.load_state_dict(checkpoint['net_D'])
         self.optim_G.load_state_dict(checkpoint['optim_G'])
         self.optim_D.load_state_dict(checkpoint['optim_D'])
-        self.train_step = checkpoint['train_step']
+        self.metrics = checkpoint['metrics']
 
     def train(self):
         self.net_G.train()
@@ -83,9 +84,9 @@ class StarGAN(object):
         d_loss.backward()
         self.optim_D.step()
 
-        self.losses['d_adv_loss'] = d_adv_loss.item()
-        self.losses['d_clf_loss'] = d_clf_loss.item()
-        self.losses['d_loss'] = d_loss.item()
+        self.metrics['critic adv loss'] = d_adv_loss.item()
+        self.metrics['critic clf loss'] = d_clf_loss.item()
+        self.metrics['critic total loss'] = d_loss.item()
 
     def train_G(self, real_images, src_labels, trg_labels):
         self.optim_G.zero_grad()
@@ -105,24 +106,9 @@ class StarGAN(object):
         g_loss.backward()
         self.optim_G.step()
 
-        self.losses['g_adv_loss'] = g_adv_loss.item()
-        self.losses['g_clf_loss'] = g_clf_loss.item()
-        self.losses['g_rec_loss'] = g_rec_loss.item()
-        self.losses['g_loss'] = g_loss.item()
-
-    def log_metrics(self):
-        wandb.log({
-            'critic adv loss': self.losses['d_adv_loss'],
-            'critic clf loss': self.losses['d_clf_loss'],
-            'critic total loss': self.losses['d_loss'],
-            'generator adv loss': self.losses['g_adv_loss'],
-            'generator clf loss': self.losses['g_clf_loss'],
-            'generator rec loss': self.losses['g_rec_loss'],
-            'generator total loss': self.losses['g_loss'],
-            'train step': self.train_step
-        })
-
-    def log_examples(self):
-        wandb.log({
-
-        })
+        self.metrics['generator adv loss'] = g_adv_loss.item()
+        self.metrics['generator clf loss'] = g_clf_loss.item()
+        self.metrics['generator rec loss'] = g_rec_loss.item()
+        self.metrics['generator total loss'] = g_loss.item()
+        self.metrics['train step'] += 1
+        self.train_step += 1

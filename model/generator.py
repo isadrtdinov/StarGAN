@@ -8,7 +8,6 @@ class Generator(nn.Module):
     """
     U-Net like generator network
     """
-
     def __init__(self, img_channels=3, cond_channels=5, conv_channels=32,
                  num_blocks=2, kernel=5, neg_slope=0.1):
         super().__init__()
