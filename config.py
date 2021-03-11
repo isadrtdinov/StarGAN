@@ -13,7 +13,7 @@ class Params:
                          'Goatee', 'Mustache', 'No_Beard', 'Smiling', 'Male', 'Young')
 
     # architecture params
-    conv_channels: int = 64
+    conv_channels: int = 32
     generator_blocks: int = 3
     critic_blocks: int = 5
     kernel: int = 7
@@ -34,6 +34,6 @@ class Params:
     example_ids: tuple = (2161, 6464, 8350, 13154, 10009, 18619, 11614, 1135)
     example_domains: int = 11
     log_steps: int = 50
-    valid_epochs: int = 1
-    checkpoint_epochs: int = 1
+    valid_steps: int = 500
+    checkpoint_steps: int = 1000
     checkpoint_template: str = 'StarGAN{}.pt'
