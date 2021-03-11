@@ -6,7 +6,7 @@ class Params:
     # general config
     project: str = 'stargan'
     random_seed: int = 1010101
-    img_size: int = 176
+    img_size: int = 160
     crop_size: int = 178
     img_channels: int = 3
     attributes: tuple = ('Black_Hair', 'Blond_Hair', 'Brown_Hair', 'Gray_Hair', 'Bald',
@@ -15,7 +15,7 @@ class Params:
     # architecture params
     conv_channels: int = 64
     generator_blocks: int = 3
-    critic_blocks: int = 6
+    critic_blocks: int = 5
     kernel: int = 7
     neg_slope: float = 0.1
 
