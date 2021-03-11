@@ -34,6 +34,8 @@ class Params:
     example_ids: tuple = (2161, 6464, 8350, 13154, 10009, 18619, 11614, 1135)
     example_domains: int = 11
     log_steps: int = 50
-    valid_steps: int = 500
+    example_steps: int = 200
+    fid_steps: int = 3000
+    fid_batch_size: int = 128
     checkpoint_steps: int = 1000
     checkpoint_template: str = 'StarGAN{}.pt'
