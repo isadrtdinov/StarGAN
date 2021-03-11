@@ -24,7 +24,7 @@ class Params:
     batch_size: int = 16
     num_epochs: int = 30
     generator_lr: float = 1e-4
-    critic_lr: float = 5e-4
+    critic_lr: float = 1e-4
 
     # loss params
     lambda_clf: float = 1.0
