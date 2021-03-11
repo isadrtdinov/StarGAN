@@ -6,7 +6,7 @@ class Params:
     # general config
     project: str = 'stargan'
     random_seed: int = 1010101
-    img_size: int = 178
+    img_size: int = 176
     crop_size: int = 178
     img_channels: int = 3
     attributes: tuple = ('Black_Hair', 'Blond_Hair', 'Brown_Hair', 'Gray_Hair', 'Bald',
