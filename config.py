@@ -9,7 +9,7 @@ class Params:
     img_size: int = 178
     crop_size: int = 178
     img_channels: int = 3
-    attributes: tuple = ('Black_Hair', 'Blond_Hair', 'Brown_Hair', 'GrayHair', 'Bald',
+    attributes: tuple = ('Black_Hair', 'Blond_Hair', 'Brown_Hair', 'Gray_Hair', 'Bald',
                          'Goatee', 'Mustache', 'No_Beard', 'Smiling', 'Male', 'Young')
 
     # architecture params
