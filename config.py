@@ -21,7 +21,7 @@ class Params:
     # training params
     num_workers: int = 8
     batch_size: int = 64
-    num_epochs: int = 30
+    num_epochs: int = 50
     generator_lr: float = 1e-4
     critic_lr: float = 1e-4
 
