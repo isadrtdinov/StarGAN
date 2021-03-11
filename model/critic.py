@@ -4,7 +4,6 @@ from torch.nn.utils import spectral_norm as SpectralNorm
 from model.layers import CriticBlock
 
 
-
 class Critic(nn.Module):
     """
     Critic network with one patch adversarial head and one classification head
