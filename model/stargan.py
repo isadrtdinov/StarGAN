@@ -46,6 +46,7 @@ class StarGAN(object):
         self.optim_G.load_state_dict(checkpoint['optim_G'])
         self.optim_D.load_state_dict(checkpoint['optim_D'])
         self.metrics = checkpoint['metrics']
+        self.train_step = checkpoint['train_step']
 
     def train(self):
         self.net_G.train()
