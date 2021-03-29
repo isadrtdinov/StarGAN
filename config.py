@@ -9,14 +9,15 @@ class Params:
     img_size: int = 160
     crop_size: int = 178
     img_channels: int = 3
-    attributes: tuple = ('Black_Hair', 'Blond_Hair', 'Brown_Hair', 'Gray_Hair', 'Bald',
-                         'Goatee', 'Mustache', 'No_Beard', 'Smiling', 'Male', 'Young')
+    attributes: tuple = ('Black_Hair', 'Blond_Hair', 'Brown_Hair',
+                         'Goatee', 'Mustache', 'No_Beard',
+                         'Male', 'Young')
 
     # architecture params
     conv_channels: int = 32
     generator_blocks: int = 3
     critic_blocks: int = 5
-    kernel: int = 7
+    kernel: int = 5
     neg_slope: float = 0.1
 
     # training params
@@ -24,7 +25,7 @@ class Params:
     batch_size: int = 16
     num_epochs: int = 30
     generator_lr: float = 1e-4
-    critic_lr: float = 1e-4
+    critic_lr: float = 5e-4
 
     # loss params
     lambda_clf: float = 1.0
@@ -32,7 +33,7 @@ class Params:
 
     # logging & checkpoints params
     example_ids: tuple = (2161, 6464, 8350, 13154, 10009, 18619, 11614, 1135)
-    example_domains: int = 11
+    example_domains: int = 8
     log_steps: int = 50
     example_steps: int = 200
     fid_steps: int = 3000

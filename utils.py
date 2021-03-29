@@ -27,11 +27,10 @@ def generate_examples(dataset, example_ids, example_domains):
         orig_images += [image]
         example_images += [image.unsqueeze(0).repeat(example_domains, 1, 1, 1)]
         labels = attrs.unsqueeze(0).repeat(example_domains, 1)
-        labels[:5, :5] = torch.eye(5)
-        labels[5:8, 5:8] = torch.eye(3)
-        labels[8, 8] = 1 - labels[8, 8]
-        labels[9, 9] = 1 - labels[9, 9]
-        labels[10, 10] = 1 - labels[10, 10]
+        labels[:3, :3] = torch.eye(3)
+        labels[3:6, 3:6] = torch.eye(3)
+        labels[6, 6] = 1 - labels[6, 6]
+        labels[7, 7] = 1 - labels[7, 7]
         example_labels += [labels]
 
     orig_images = torch.stack(orig_images, dim=0)
