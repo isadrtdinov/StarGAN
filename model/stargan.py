@@ -83,6 +83,8 @@ class StarGAN(object):
         d_clf_loss = self.clf_loss(real_clf_logits, src_labels)
         d_loss = d_adv_loss + self.params.lambda_clf * d_clf_loss
         d_loss.backward()
+
+        nn.utils.clip_grad_norm(self.net_D.parameters(), 1.0)
         self.optim_D.step()
 
         self.metrics['critic adv loss'] = d_adv_loss.item()
@@ -105,6 +107,8 @@ class StarGAN(object):
         g_loss = g_adv_loss + self.params.lambda_clf * g_clf_loss + \
                               self.params.lambda_rec * g_rec_loss
         g_loss.backward()
+
+        nn.utils.clip_grad_norm(self.net_G.parameters(), 1.0)
         self.optim_G.step()
 
         self.metrics['generator adv loss'] = g_adv_loss.item()
