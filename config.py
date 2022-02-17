@@ -18,7 +18,7 @@ class Params:
     generator_blocks: int = 3
     critic_blocks: int = 5
     kernel: int = 5
-    neg_slope: float = 0.1
+    neg_slope: float = 0.2
 
     # training params
     num_workers: int = 8
@@ -40,3 +40,4 @@ class Params:
     fid_batch_size: int = 128
     checkpoint_steps: int = 1000
     checkpoint_template: str = 'StarGAN{}.pt'
+    checkpoint_root: str = 'checkpoint'

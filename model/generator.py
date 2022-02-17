@@ -14,7 +14,7 @@ class Generator(nn.Module):
         block_channels = [conv_channels * 2 ** i for i in range(num_blocks)]
 
         self.input_block = nn.Sequential(
-            nn.Conv2d(img_channels + cond_channels, conv_channels, kernel_size=kernel,
+            nn.Conv2d(img_channels, conv_channels, kernel_size=kernel,
                       stride=1, padding=math.ceil((kernel - 1) / 2)),
             nn.InstanceNorm2d(conv_channels),
             nn.LeakyReLU(neg_slope)
@@ -24,6 +24,7 @@ class Generator(nn.Module):
             DownsampleBlock(channels, kernel, neg_slope) for channels in block_channels
         ])
 
+        block_channels[-1] += cond_channels
         self.upsample_blocks = nn.ModuleList([
             UpsampleBlock(channels, kernel, neg_slope) for channels in block_channels[::-1]
         ])
@@ -35,16 +36,16 @@ class Generator(nn.Module):
         )
 
     def forward(self, images, conds):
-        conds = conds.reshape((conds.shape[0], conds.shape[1], 1, 1)) \
-                     .repeat(1, 1, images.shape[2], images.shape[3]).to(torch.float)
-        inputs = torch.cat([images, conds], dim=1)
-
-        features_list = [self.input_block(inputs)]
+        features_list = [self.input_block(images)]
         outputs = features_list[-1]
 
         for block in self.downsample_blocks:
             features_list += [block(outputs)]
             outputs = features_list[-1]
+
+        conds = conds.reshape((conds.shape[0], conds.shape[1], 1, 1)) \
+            .repeat(1, 1, outputs.shape[2], outputs.shape[3]).to(torch.float)
+        outputs = torch.cat([outputs, conds], dim=1)
 
         for block, features in zip(self.upsample_blocks, features_list[-2::-1]):
             outputs = block(outputs, features)
