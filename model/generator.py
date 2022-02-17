@@ -24,7 +24,10 @@ class Generator(nn.Module):
             DownsampleBlock(channels, kernel, neg_slope) for channels in block_channels
         ])
 
-        block_channels[-1] += cond_channels
+        self.bottleneck_block = nn.Conv2d(
+            2 * block_channels[-1] + cond_channels, 2 * block_channels[-1], kernel_size=1
+        )
+
         self.upsample_blocks = nn.ModuleList([
             UpsampleBlock(channels, kernel, neg_slope) for channels in block_channels[::-1]
         ])
@@ -46,6 +49,7 @@ class Generator(nn.Module):
         conds = conds.reshape((conds.shape[0], conds.shape[1], 1, 1)) \
             .repeat(1, 1, outputs.shape[2], outputs.shape[3]).to(torch.float)
         outputs = torch.cat([outputs, conds], dim=1)
+        outputs = self.bottleneck_block(outputs)
 
         for block, features in zip(self.upsample_blocks, features_list[-2::-1]):
             outputs = block(outputs, features)
